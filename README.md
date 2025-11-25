@@ -16,3 +16,5 @@ git init - инициализация
 
 **ls** - статус
 
+**git clone *https://github.com/Andreyanchev-Leonid7/1.git*** - восстановление репозитория
+
