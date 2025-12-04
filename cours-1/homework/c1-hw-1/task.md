@@ -26,6 +26,10 @@
 
 **int numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9} - массив**
 
+**do {тело цикла} while (условие); - цикл do while**
+
+**foreache (int n in V) - цикл foreache**
+
 **for (int i = 0; i < 5; i++) { scanf("%d", \&arr\[i]) } - ввод массива с клавиатуры**
 
 **int F(int a, int b) {} - функция**
