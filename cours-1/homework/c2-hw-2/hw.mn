@@ -1,0 +1,38 @@
+// 1 задание
+
+int[] V = { 4, 2, 4, 3, 5, 2, 4 };
+int f = 0, t = 0, g = 0;
+foreach (int n in V)
+{
+if (n == 5) f++;
+if (n == 2) t++;
+g = g + n;
+}
+Console.WriteLine($"Среднее арифметическое {g / V.Length}");
+Console.WriteLine($"Количество пятерок - {f}");
+Console.WriteLine($"Количество двоек - {t}");
+
+// 2 задание
+
+int[] V = { 5, 4, 2, 1, 4 };
+foreach  (int n in V) Console.WriteLine(n);
+Console.ReadLine();
+for (int i = 4; i >= 0; i--)
+{
+   Console.WriteLine(V[i]);
+}
+
+// 3 задание
+
+for (int i = 1; i <= 20; i++) if (i % 2 == 0) Console.WriteLine(i);
+
+// 4 задание
+
+int t = 0;
+for (int i = 0; i < 3; i++)
+{
+    string s = Console.ReadLine();
+    if (s != "1234" && t != 3) { t++; continue; }
+    else { Console.WriteLine("Разблокированно"); break; }
+}
+if (t == 3) Console.WriteLine("Заблокировано"); 
