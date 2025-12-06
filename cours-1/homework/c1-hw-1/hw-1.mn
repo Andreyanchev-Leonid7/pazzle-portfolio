@@ -1,0 +1,13 @@
+// 1 задание
+
+int[] V = { 4, 2, 4, 3, 5, 2, 4 };
+int f = 0, t = 0, g = 0;
+foreach (int n in V)
+{
+if (n == 5) f++;
+if (n == 2) t++;
+g = g + n;
+}
+Console.WriteLine($"Среднее арифметическое {g / V.Length}");
+Console.WriteLine($"Количество пятерок - {f}");
+Console.WriteLine($"Количество двоек - {t}");

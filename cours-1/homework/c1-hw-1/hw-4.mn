@@ -1,0 +1,10 @@
+// 4 задание
+
+int t = 0;
+for (int i = 0; i < 3; i++)
+{
+    string s = Console.ReadLine();
+    if (s != "1234" && t != 3) { t++; continue; }
+    else { Console.WriteLine("Разблокированно"); break; }
+}
+if (t == 3) Console.WriteLine("Заблокировано"); 

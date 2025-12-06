@@ -1,0 +1,10 @@
+// 2 задание
+
+int[] V = { 5, 4, 2, 1, 4 };
+foreach  (int n in V) Console.WriteLine(n);
+Console.ReadLine();
+for (int i = 4; i >= 0; i--)
+{
+   Console.WriteLine(V[i]);
+}
+
