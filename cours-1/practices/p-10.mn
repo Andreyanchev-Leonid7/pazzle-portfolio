@@ -38,3 +38,34 @@ public class Book
     public void Tre() { X = X + 2; }
     public void Read() { Console.WriteLine($"Вы прочитали {X} страниц из {Pages}"); }
 }
+
+// 4 задание
+
+public class Book
+{
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public Book(string title, string author)
+    {
+        Title = title;
+        Author = author;
+    }
+}
+public class Library
+{
+    private List<Book> books = new List<Book>();
+    public void AddBook(Book book)
+    {
+        books.Add(book);
+    }
+    public void PrintAllBooks()
+    {
+        Console.WriteLine("Список всех книг в библиотеке:");
+
+        foreach (var book in books)
+        {
+            Console.WriteLine($"- \"{book.Title}\" (автор: {book.Author})");
+        }
+        Console.WriteLine($"Всего книг: {books.Count}");
+    }
+}
