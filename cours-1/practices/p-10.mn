@@ -15,6 +15,7 @@ public class Car
     }
     public void Accelerate() { Speed = Speed + 10; }
 }
+<<<<<<< HEAD
 
 // 3 задание 
 
@@ -38,3 +39,5 @@ public class Book
     public void Tre() { X = X + 2; }
     public void Read() { Console.WriteLine($"Вы прочитали {X} страниц из {Pages}"); }
 }
+=======
+>>>>>>> dac06318874e9fe763e040373c1f3477813e8646
