@@ -33,3 +33,19 @@ foreache (int n in V) - цикл foreache
 for (int i = 0; i < 5; i++) { scanf("%d", &arr[i]) } - ввод массива с клавиатуры
 
 int F(int a, int b) {} - функция
+
+var player1 = new player("Leonid"); - создание нового объекта
+Console.WriteLine(player1.Name); - вывод Name
+Console.WriteLine(player1.LVL); - вывод LVL
+public class player
+{
+    public string Name { get; set; } - переменная 
+    public int LVL { get; private set; } = 0; - переменная
+    public void LVL_UP() { LVL++; } - функция
+
+    public player(string name, int lvl)
+    {
+        Name = name;
+        LVL = 0;
+    }
+}

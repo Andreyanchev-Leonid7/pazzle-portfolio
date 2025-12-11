@@ -1,0 +1,17 @@
+// 1 - 2 задание 
+
+var car1 = new Car("Mazda");
+car1.Accelerate();
+Console.WriteLine(car1.Marca);
+Console.WriteLine(car1.Speed);
+public class Car
+{
+    public string Marca { get; set; }
+    public int Speed { get; set; }
+    public Car(string name)
+    {
+        Marca = name;
+        Speed = 10;
+    }
+    public void Accelerate() { Speed = Speed + 10; }
+}
