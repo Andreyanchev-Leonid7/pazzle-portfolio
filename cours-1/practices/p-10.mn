@@ -1,0 +1,40 @@
+// 1 - 2 задание 
+
+var car1 = new Car("Mazda");
+car1.Accelerate();
+Console.WriteLine(car1.Marca);
+Console.WriteLine(car1.Speed);
+public class Car
+{
+    public string Marca { get; set; }
+    public int Speed { get; set; }
+    public Car(string name)
+    {
+        Marca = name;
+        Speed = 10;
+    }
+    public void Accelerate() { Speed = Speed + 10; }
+}
+
+// 3 задание 
+
+var book1 = new Book("Спящая красавица", "Шарль Перро");
+book1.Tre();
+book1.Read();
+
+public class Book
+{
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public int Pages  { get; set; }
+    public int X { get; set; }
+    public Book(string name, string name2)
+    {
+        Title = name;
+        Author = name2;
+        Pages = 20;
+        X = 0;
+    }
+    public void Tre() { X = X + 2; }
+    public void Read() { Console.WriteLine($"Вы прочитали {X} страниц из {Pages}"); }
+}
