@@ -1,0 +1,16 @@
+string s = Console.ReadLine();
+string b = Console.ReadLine();
+int b1 = Convert.ToInt32(b);
+string c = Console.ReadLine();
+int c1 = Convert.ToInt32(c);
+var phone1 = new Phone(s, b1);
+phone1.Charge(c1);
+phone1.Use(c1);
+public class Phone
+{
+    public string Model { get; set; }
+    public int Battery { get; set; }
+    public Phone(string s, int b){ Model = s; Battery = b;}
+    public void Charge(int g) { Battery = Battery + g; Console.WriteLine($"Заряд: {Battery}"); }
+    public void Use(int g) { Battery = Battery - g; Console.WriteLine($"Заряд: {Battery}"); }
+}
