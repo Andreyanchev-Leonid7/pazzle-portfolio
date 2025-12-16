@@ -1,0 +1,38 @@
+var book1 = new Book();
+var book2 = new Book("Спящая красавица");
+var book3 = new Book("Спящая красавица", "Шарль Перро");
+var book4 = new Book("Спящая красавица", "Шарль Перро", 33);
+book1.Print();
+book2.Print();
+book3.Print();
+book4.Print();
+public class Book
+{
+    public string A {  get; private set; }
+    public string B { get; private set; }
+    public int C { get; private set; }
+    public Book()
+    {
+        A = "Неизвестная";
+        B = "Неизвестный";
+        C = 0;
+    }
+    public Book(string a)
+    {
+        A = a;
+        B = "Неизвестный";
+        C = 0;
+    }
+    public Book(string a, string b)
+    {
+        A = a;
+        B = b;
+        C = 0;
+    }
+    public Book(string a, string b, int c) { 
+        A = a;
+        B = b;
+        C = c;
+    }
+    public void Print() { Console.WriteLine(A); Console.WriteLine(B); Console.WriteLine(C); }
+}
