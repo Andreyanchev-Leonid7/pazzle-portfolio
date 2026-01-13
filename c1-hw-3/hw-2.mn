@@ -1,0 +1,25 @@
+var d = new Device();
+d.Name() = "RedMond";
+d.Boil();
+d.Toast();
+
+public class Device{
+    public string Name {get;set;}
+    public Device(string Name){
+        this.Name = Name;
+    }
+    public void TurnOn(){
+        Console.WriteLine($"Устройство {Name} включено");
+    }
+}
+public class Kettle : Device{
+    public void Boil(){
+        Console.WriteLine("Чайник кипятит воду.");
+    }
+}
+public class Toaster : Device{
+    public void Toast(){
+        Console.WriteLine("Тостер поджаривает хлеб.");
+    }
+}
+
