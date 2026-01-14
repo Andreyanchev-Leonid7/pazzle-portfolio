@@ -1,0 +1,37 @@
+var d = new Device();
+d.Name() = "RedMond";
+d.Boil();
+d.Toast();
+var t = new Kettle();
+var v = new Toaster();
+t.Beep();
+v.Beep();
+
+public class Device{
+    public string Name {get;set;}
+    public Device(string Name){
+        this.Name = Name;
+    }
+    public void TurnOn(){
+        Console.WriteLine($"Устройство {Name} включено");
+    }
+    public virtual void Beep(){
+        Console.WriteLine("Устройство падает сигнал");
+    }
+}
+public class Kettle : Device{
+    public void Boil(){
+        Console.WriteLine("Чайник кипятит воду.");
+    }
+    public override void Beep(){
+        Console.WriteLine("Чайник пикнул: Пи-пи!");
+    }
+}
+public class Toaster : Device{
+    public void Toast(){
+        Console.WriteLine("Тостер поджаривает хлеб.");
+    }
+    public override void Beep(){
+        Console.WriteLine("Тостер пикнул: Динь!");
+    }
+}
