@@ -1,0 +1,34 @@
+// 1 Задание
+var n = new Dog();
+n.Eat();
+n.Run();
+public class Animal
+{
+    protected int energy = 100;
+    public void Eat()
+    {
+        energy += 10;
+        Console.WriteLine(energy);
+    }
+}
+public class Dog : Animal
+{
+    public void Run()
+    {
+        energy -= 20;
+        Console.WriteLine(energy);
+    }
+}
+// 2 Задание
+var t = new Termometer();
+t.Temp();
+public class Termometer
+{
+    protected int TemperatureCelsius = -20;
+    public int TemperatureFahrenheit { get; set; }
+    public void Temp()
+    {
+        TemperatureFahrenheit = (TemperatureCelsius * 9 / 5) + 32;
+        Console.WriteLine(TemperatureFahrenheit);
+    }
+}
