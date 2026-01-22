@@ -1,0 +1,87 @@
+// 1, 2, 3, 4 Задание
+
+var dog = new Dog();
+dog.Name = "Шарик";
+dog.Eat();
+dog.Bark();
+dog.Move();
+
+var cat = new Cat();
+cat.Name = "Мурка";
+cat.Eat();
+Cat.Bark();
+cat.Move();
+
+public class Animals{
+    public string Name { get; set; }
+    public virtual void Eat() {
+        Console.WriteLine($"{Name} ест");
+    }
+    public virtual void Bark() {
+        Console.WriteLine($"Животное издает звук");
+    }
+    public virtual void Move() {
+        Console.WriteLine($"Животное двигается");
+    }
+    public virtual void New(){
+        Console.WriteLine($"Создано новое животное: {Name}");
+    } 
+}
+public class Dog : Animals{
+    public override void Bark(){
+        Console.WriteLine($"{Name} лает");
+    }
+    public override void Move(){
+        Console.WriteLine($"{Name} бежит");
+    }
+    public virtual void New(){
+        Console.WriteLine($"Создана собака: {Name}");
+    } 
+}
+public class Cat : Animals{
+    public override void Bark(){
+        Console.WriteLine($"{Name} мяукает");
+    }
+    public override void Move(){
+        Console.WriteLine($"{Name} бежит");
+    }
+    public virtual void New(){
+        Console.WriteLine($"Создана кошка: {Name}");
+    } 
+}
+
+
+// 5 Задание 
+
+var car = new Car();
+car.Drive();
+
+public class Transport{
+    public string Name {get; set;}
+    public virtual void Drive(){ 
+        Console.WriteLine("Транспорт движется");
+    }
+}
+public class Car : Transport{
+    public override void Drive(){
+        Console.WriteLine($"Машина едет по дороге");
+    }
+}
+public class ElectricCar : Car{
+    public override void Drive(){
+        Console.WriteLine("Электромобиль тихо едет");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

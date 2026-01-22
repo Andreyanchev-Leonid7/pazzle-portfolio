@@ -1,0 +1,39 @@
+// задание 1
+ 
+string a = Console.ReadLine();
+int a1 = Convert.ToInt32(a);
+if (a1 > 0) Console.WriteLine("Число положительное");
+else if (a1 < 0) Console.WriteLine("Число отрицательное");
+else Console.WriteLine("Число равно нулю");
+
+// задание 2
+
+string a = Console.ReadLine();
+int a1 = Convert.ToInt32(a);
+if (a1 < 18) Console.WriteLine("Вы несовершеннолетний");
+else if (a1 >= 18) Console.WriteLine("Вы совершеннолетний");
+
+// задание 3
+
+string a = Console.ReadLine();
+int a1 = Convert.ToInt32(a);
+if (a1 % 2 == 0) Console.WriteLine("Чётное");
+else Console.WriteLine("Нечётное");
+
+// задание 4
+
+string a = Console.ReadLine(), b = Console.ReadLine();
+int a1 = Convert.ToInt32(a);
+int b1 = Convert.ToInt32(a);
+if (a1 < 0 && b1 < 0) Console.WriteLine("Числа отрицательные");
+else if (a1 < 0 || b1 < 0) Console.WriteLine("Хотя бы одно число отрицательное");
+else if (a1 < 0) Console.WriteLine($"Число a = {a} отрицательное");
+
+// задание 5
+
+string c = Console.ReadLine();
+int c1 = Convert.ToInt32(a);
+if (c1 < 3) Console.WriteLine("Неудовлетворительно");
+else if (c1 == 3) Console.WriteLine("Зачёт");
+else if (c1 == 4) Console.WriteLine("Хорошо");
+else Console.WriteLine("Отлично");

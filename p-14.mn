@@ -1,0 +1,52 @@
+// 1 Задание
+var name = new Person("Anna", 30);
+name.PrintInfo();
+name.Add("Leonid");
+name.PrintInfo();
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public int Id { get; set; } = 0;
+    public Person(string n, int a)
+    {
+        Name = n;
+        Age = a;
+    }
+    public void Add(string n) {
+        if (n.Length != 0)
+        {
+            Name = n;
+            Id = 1; 
+        }
+        else
+        {
+            Console.WriteLine("Ошибка");
+            Id = 2;
+        }
+    }
+    public void AED(int a)
+    {
+        if (a <= 0)
+        {
+            Age = a;
+            Id = 1;
+        }
+        else
+        {
+            Console.WriteLine("Ошибка");
+            Id = 2;
+        }
+    }
+    public void PrintInfo()
+    {
+        if (Id == 0) {
+            Console.WriteLine("Новая личность"); 
+            Console.WriteLine($"Имя: {Name} Возраст: {Age}") ;
+        }
+        else if (Id == 1) { 
+            Console.WriteLine("Личность изменена"); 
+            Console.WriteLine($"Имя: {Name} Возраст: {Age}"); 
+        }
+    }
+}
