@@ -13,7 +13,7 @@ public class Device{
         this.Name = Name;
     }
     public void TurnOn(){
-        Console.WriteLine($"Устройство {Name} включено");
+        Console.WriteLine($"Устройство {Name} включено"); 
     }
     public virtual void Beep(){
         Console.WriteLine("Устройство падает сигнал");
