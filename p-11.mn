@@ -21,7 +21,7 @@ public class Book
     {
         A = a;
         B = "Неизвестный";
-        C = 0;
+        C = 0; 
     }
     public Book(string a, string b)
     {

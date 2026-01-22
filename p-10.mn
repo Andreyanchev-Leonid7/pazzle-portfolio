@@ -15,7 +15,7 @@ public class Car
     }
     public void Accelerate() { Speed = Speed + 10; }
 }
-
+ 
 // 3 задание 
 
 var book1 = new Book("Спящая красавица", "Шарль Перро");

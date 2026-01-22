@@ -1,7 +1,7 @@
 var c1 = new Car("Mazda", "MPV5");
 public class Car
 {
-    public string Brand { get; set; }
+    public string Brand { get; set; } 
     public string Model { get; set; }
     public int Speed { get; set; }
     public Car(string brand, string model) : this(brand, "Неизвестно", 0)

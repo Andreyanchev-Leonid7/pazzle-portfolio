@@ -1,5 +1,5 @@
 // задание 1
-
+ 
 string a = Console.ReadLine();
 int a1 = Convert.ToInt32(a);
 if (a1 > 0) Console.WriteLine("Число положительное");

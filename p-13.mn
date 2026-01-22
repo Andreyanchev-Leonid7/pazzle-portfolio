@@ -58,7 +58,7 @@ car.Drive();
 
 public class Transport{
     public string Name {get; set;}
-    public virtual void Drive(){
+    public virtual void Drive(){ 
         Console.WriteLine("Транспорт движется");
     }
 }

@@ -2,7 +2,7 @@
 var n = new Dog();
 n.Eat();
 n.Run();
-public class Animal
+public class Animal 
 {
     protected int energy = 100;
     public void Eat()

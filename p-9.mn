@@ -10,7 +10,7 @@ Console.WriteLine(SayHello());
 
 // 2 задание 
 
-static string Greed(string name)
+static string Greed(string name) 
 {
     return $"Hello, {name}";
 }
