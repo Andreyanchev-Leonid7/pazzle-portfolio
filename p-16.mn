@@ -1,0 +1,119 @@
+// 1 Задание
+var dog = new Dog();
+var cat = new Cat();
+var cow = new Cow();
+dog.Voice();
+cat.Voice();
+cow.Voice();
+public class Animal
+{
+    public virtual void Voice()
+    {
+        Console.WriteLine("Животное издает звук");
+    }
+}
+public class Dog : Animal
+{
+    public override void Voice()
+    {
+        Console.WriteLine("Собака лает: Гав-гав!");
+    }
+}
+public class Cat : Animal
+{
+    public override void Voice()
+    {
+        Console.WriteLine("Кошка мяукает: Мяу-мяу!");
+    }
+}
+public class Cow : Animal
+{
+    public override void Voice()
+    {
+        Console.WriteLine("Корова мычит: Му-му!");
+    }
+}
+// 2 Задание
+var car = new Car();
+var boat = new Boat();
+var plane = new Plane();
+car.Move();
+boat.Move();
+plane.Move();
+public class Transport
+{
+    public virtual void Move()
+    {
+        Console.WriteLine("Транспорт движется.");
+    }
+}
+public class Car : Transport
+{
+    public override void Move()
+    {
+        Console.WriteLine("Машина едет по дороге.");
+    }
+}
+public class Boat : Transport
+{
+    public override void Move()
+    {
+        Console.WriteLine("Лодка плывет по воде.");
+    }
+}
+
+public class Plane : Transport
+{
+    public override void Move()
+    {
+        Console.WriteLine("Самолет летит в небе.");
+    }
+}
+// 3 Задание
+var car = new Car();
+var boat = new Boat();
+var plane = new Plane();
+car.Name = "Audi";
+boat.Name = "Yamaha";
+plane.Name = "Boeing";
+car.Move();
+boat.Move();
+plane.Move();
+public class Transport
+{
+    public string Name { get; set; }
+    public Transport()
+    {
+        this.Name = Name;
+    }
+    public virtual void Move()
+    {
+        Console.WriteLine($"{Name}: Транспорт движется.");
+    }
+}
+public class Car : Transport
+{
+    public override void Move()
+    {
+        base.Move();
+        Console.WriteLine("Машина едет по дороге.");
+    }
+}
+public class Boat : Transport
+{
+    public override void Move()
+    {
+        base.Move();
+        Console.WriteLine("Лодка плывет по воде.");
+    }
+}
+
+public class Plane : Transport
+{
+    public override void Move()
+    {
+        base.Move();
+        Console.WriteLine("Самолет летит в небе.");
+    }
+}
+
