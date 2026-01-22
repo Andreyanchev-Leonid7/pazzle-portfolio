@@ -1,0 +1,40 @@
+// 2 Задание 
+var cor1 = new Warrior();
+var cor2 = new Mage();
+var cor3 = new Archer();
+cor1.Name = "Maximus";
+cor2.Name = "Gandelf";
+cor3.Name = "Ternas";
+cor1.Attack();
+cor2.Attack();
+cor3.Attack();
+public abstract class Character
+{
+    public string Name { get; set; }
+    public Character()
+    {
+        this.Name = Name;
+    }
+    public abstract void Attack();
+}
+public class Warrior : Character
+{
+    public override void Attack()
+    {
+        Console.WriteLine($"Воин {Name} атакует мечом");
+    }
+}
+public class Mage : Character
+{
+    public override void Attack()
+    {
+        Console.WriteLine($"Маг {Name} кидает огненный шар");
+    }
+}
+public class Archer : Character
+{
+    public override void Attack()
+    {
+        Console.WriteLine($"Лучник {Name} стреляет из лука");
+    }
+}
