@@ -1,0 +1,107 @@
+var zooPark = new Zoo(5);
+zooPark.Add(new Dog("Рекс"));
+zooPark.Add(new Cat("Снежок"));
+zooPark.Add(new Elephant("Балу"));
+
+Console.WriteLine("=== Звуки ===");
+zooPark.MakeAllSounds();
+
+Console.WriteLine("=== Кормим ===");
+zooPark.FeedAll();
+public class Animal
+{
+    public string Name { get; set; }
+    private int Energy = 0;
+
+    public Animal(string name)
+    {
+        Name = name;
+    }
+
+    public void Eat()
+    {
+        Energy += 20;
+        Console.WriteLine($"{Name} ест.");
+    }
+
+    public virtual void MakeSound()
+    {
+        Console.WriteLine($"{Name} издает звук");
+        Energy -= 10;
+    }
+
+    public void Rest()
+    {
+        Energy += 10;
+    }
+}
+
+public class Dog : Animal
+{
+    public Dog(string name) : base(name) { }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name} лает.");
+    }
+}
+
+public class Cat : Animal
+{
+    public Cat(string name) : base(name) { }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name} мяукает.");
+    }
+}
+
+public class Elephant : Animal
+{
+    public Elephant(string name) : base(name) { }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name} трубит.");
+    }
+}
+public class Zoo
+{
+    private Animal[] animals;
+    private int count;
+
+    public Zoo(int cap)
+    {
+        animals = new Animal[cap];
+        count = 0;
+    }
+
+    public void Add(Animal animal)
+    {
+        if (count < animals.Length)
+        {
+            animals[count] = animal;
+            count++;
+        }
+        else
+        {
+            Console.WriteLine("Зоопарк переполнен!");
+        }
+    }
+
+    public void MakeAllSounds()
+    {
+        for (int i = 0; i < count; i++)
+        {
+            animals[i].MakeSound();
+        }
+    }
+
+    public void FeedAll()
+    {
+        for (int i = 0; i < count; i++)
+        {
+            animals[i].Eat();
+        }
+    }
+}
