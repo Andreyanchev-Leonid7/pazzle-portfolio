@@ -1,0 +1,28 @@
+public abstract class CookingProces
+{
+    public string Name { get; set; }
+    public abstract void Ter();
+    public abstract void Rer();
+}
+public class Soup : CookingProces
+{
+    public override void Ter()
+    {
+        Console.WriteLine("Суп готов. Подаю в глубой тарелке с ложкой.");
+    }
+    public override void Rer()
+    {
+        Console.WriteLine("Суп вскипел. Пора добавить ингредиенты.");
+    }
+}
+public class Steak : CookingProces
+{
+    public override void Ter()
+    {
+        Console.WriteLine("Стейк готов. Подаю в плоской тарелке с вилкой.");
+    }
+    public override void Rer()
+    {
+        Console.WriteLine("Стейк замориновался. Кладу стейк на сковорожку.");
+    }
+}
