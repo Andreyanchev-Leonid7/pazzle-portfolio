@@ -1,0 +1,193 @@
+// 1 Задание
+public abstract class Shape
+{
+    public abstract string Name { get; }
+
+    public abstract double GetArea();
+
+    public void Print()
+    {
+        Console.WriteLine($"{Name}: площадь = {GetArea():F2}");
+    }
+}
+public class Circle : Shape
+{
+    public double Radius { get; set; }
+
+    public Circle(double radius)
+    {
+        Radius = radius;
+    }
+
+    public override string Name => "Круг";
+
+    public override double GetArea()
+    {
+        return 3.14 * (Radius * Radius);
+    }
+}
+public class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+
+    public Rectangle(double width, double height)
+    {
+        Width = width;
+        Height = height;
+    }
+
+    public override string Name => "Прямоугольник";
+
+    public override double GetArea()
+    {
+        return Width * Height;
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        Shape[] shapes = new Shape[]
+        {
+            new Circle(5.0),
+            new Rectangle(4.0, 6.0),
+            new Circle(3.5),
+            new Rectangle(2.0, 8.0)
+        };
+        Console.WriteLine("=== Задание 1: Фигуры ===");
+        foreach (var shape in shapes)
+        {
+            shape.Print();
+        }
+        Console.WriteLine();
+
+        Console.WriteLine("=== Задание 2: Животные ===");
+
+        Animal[] animals = new Animal[]
+        {
+            new Dog("Рекс"),
+            new Cat("Мурка"),
+            new Dog("Бобик"),
+            new Cat("Васька")
+        };
+
+        foreach (var animal in animals)
+        {
+            animal.Eat();
+            animal.MakeSound();
+        }
+    }
+}
+
+// Задание 2
+public abstract class Animal
+{
+    public string Name { get; }
+
+    public Animal(string name)
+    {
+        Name = name;
+        Console.WriteLine($"Создано животное: {Name}");
+    }
+
+    public void Eat()
+    {
+        Console.WriteLine($"{Name} ест.");
+    }
+
+    public abstract void MakeSound();
+}
+
+public class Dog : Animal
+{
+    public Dog(string name) : base(name) { }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name}: Гав-гав!");
+    }
+}
+
+public class Cat : Animal
+{
+    public Cat(string name) : base(name) { }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name}: Мяу!");
+    }
+}
+// 3 Задание 
+Transport[] t = { new Car(), new Boat() };
+foreach (var x in t) x.Move();
+public abstract class Transport
+{
+    public void Move()
+    {
+        Start();
+        MoveCore();
+        Stop();
+    }
+    protected void Start()
+    {
+        Console.WriteLine("Начало движения");
+    }
+    protected void Stop()
+    {
+        Console.WriteLine("Конец движения");
+    }
+    protected abstract void MoveCore();
+}
+public class Car : Transport
+{
+    protected override void MoveCore()
+    {
+        Console.WriteLine("Машина едет по дороге");
+    }
+}
+public class Boat : Transport
+{
+    protected override void MoveCore()
+    {
+        Console.WriteLine("Лодка плывет по воде");
+    }
+}
+// 4 Задание
+DocumentExporter[] exporters =
+{
+new TxtExporter(),
+new PdfExporter()
+};
+
+foreach (var e in exporters)
+{
+    e.ShowInfo("Hello world!");
+    e.Export("Hello world!");
+}
+public abstract class DocumentExporter
+{
+    public abstract string FormatName { get; }
+    public abstract void Export(string content);
+    public void ShowInfo(string content)
+    {
+        Console.WriteLine($"Экспорт в формат {FormatName}: {content}");
+    }
+}
+public class TxtExporter : DocumentExporter
+{
+    public override string FormatName => "TXT";
+    public override void Export(string content)
+    {
+        Console.WriteLine("Сохраняем текстовый файл");
+    }
+}
+public class PdfExporter : DocumentExporter
+{
+    public override string FormatName => "PDF";
+    public override void Export(string content)
+    {
+        Console.WriteLine("Создаём PDF-документ");
+    }
+}
