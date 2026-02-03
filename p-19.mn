@@ -1,0 +1,53 @@
+// 1 Задание
+IPlayable[] instruments =
+{
+    new Guitar(),
+    new Piano(),
+    new Drum()
+};
+
+foreach (var i in instruments)
+    i.Play();
+public interface IPlayable
+{
+    void Play();
+}
+public class Guitar : IPlayable
+{
+    public void Play() => Console.WriteLine("Гитара играет аккорды.");
+}
+
+public class Piano : IPlayable
+{
+    public void Play() => Console.WriteLine("Пианино играет мелодию.");
+}
+
+public class Drum : IPlayable
+{
+    public void Play() => Console.WriteLine("Барабан отбивает ритм.");
+}
+// 2 Задание
+TextDocument doc = new TextDocument();
+doc.Read("data.txt");
+doc.Write("data.txt", "Привет, мир!");
+doc.Save();
+
+
+public interface IRead
+{
+    void Read(string s);
+}
+public interface IWrite
+{
+    void Write(string s1, string s2);
+}
+public interface ISave
+{
+    void Save();
+}
+public class TextDocument : IRead, IWrite, ISave
+{
+    public void Read(string s) => Console.WriteLine($"Читается файл: {s}");
+    public void Write(string s1, string s2) => Console.WriteLine($"В файле: {s1}, написанно {s2}");
+    public void Save() => Console.WriteLine("Сохраняю");
+}
