@@ -1,0 +1,286 @@
+// 1-8 Задания
+Publisher publisher1 = new Publisher("Просвещение");
+Publisher publisher2 = new Publisher("АСТ");
+Publisher publisher3 = new Publisher("Эксмо");
+Book book1 = new Book("Введение в программирование", "Иванов И.И.", 2020, 300, publisher1);
+Textbook textbook1 = new Textbook("Алгебра 10 класс", "Петров П.П.", 2021, 200, publisher1, "Математика");
+FictionBook fiction1 = new FictionBook("Мастер и Маргарита", "Булгаков М.А.", 1966, 400, publisher2, "Роман");
+FictionBook fiction2 = new FictionBook("Преступление и наказание", "Достоевский Ф.М.", 1866, 600, publisher3, "Роман");
+Library library = new Library("Центральная городская библиотека");
+library.AddBook(book1);
+library.AddBook(textbook1);
+library.AddBook(fiction1);
+library.AddBook(fiction2);
+library.DisplayAllBooks();
+Reader reader1 = new Reader("Анна Сидорова", 1);
+Reader reader2 = new Reader("Иван Петров", 2);
+library.RegisterReader(reader1);
+library.RegisterReader(reader2);
+library.LendBook("Мастер и Маргарита", reader1);
+library.LendBook("Алгебра 10 класс", reader2);
+reader1.DisplayBorrowedBooks();
+reader2.DisplayBorrowedBooks();
+library.DisplayAllBooks();
+var foundBook = library.FindBook("Введение в программирование");
+if (foundBook != null)
+{
+    Console.WriteLine("Найдена книга:");
+    foundBook.DisplayInfo();
+}
+library.ReturnBook(foundBook, reader1);
+var borrowedBook = reader1.BorrowedBooks.FirstOrDefault();
+if (borrowedBook != null)
+{
+    library.ReturnBook(borrowedBook, reader1);
+}
+library.RemoveBook("Преступление и наказание");
+library.DisplayAllBooks();
+reader1.DisplayBorrowedBooks();
+List<Book> books = new List<Book> { book1, textbook1, fiction1 };
+foreach (var book in books)
+{
+    Console.WriteLine(book.GetInfo());
+}
+Console.ReadKey();
+public class Publisher
+{
+    public string Name { get; set; }
+
+    public Publisher(string name)
+    {
+        Name = name;
+    }
+    public void DisplayInfo()
+    {
+        Console.WriteLine($"Издательство: {Name}");
+    }
+}
+public abstract class Publication
+{
+    public abstract string GetInfo();
+}
+public class Book : Publication
+{
+    private string _title;
+    private string _author;
+    private int _year;
+    private int _pages;
+
+    public string Title
+    {
+        get => _title;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Название не может быть пустым");
+                _title = value;
+        }
+    }
+   public string Author
+   {
+       get => _author;
+       set
+       {
+           if (string.IsNullOrWhiteSpace(value))
+               throw new ArgumentException("Автор не может быть пустым");
+           _author = value;
+        }
+   }
+    public int Year
+    {
+        get => _year;
+        set
+        {
+            if (value < 0 || value > DateTime.Now.Year)
+                throw new ArgumentException($"Год должен быть между 0 и {DateTime.Now.Year}");
+            _year = value;
+        }
+    }
+    public int Pages
+    {
+        get => _pages;
+        set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Количество страниц должно быть больше 0");
+            _pages = value;
+        }
+    }
+    public Publisher Publisher { get; set; }
+    public Book(string title, string author, int year, int pages, Publisher publisher)
+    {
+        Title = title;
+        Author = author;
+        Year = year;
+        Pages = pages;
+        Publisher = publisher;
+     }
+    public Book() { }
+    public override string GetInfo()
+    {
+        return $"Книга: {Title}, Автор: {Author}, Год: {Year}, Страниц: {Pages}";
+    }
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine(GetInfo());
+        Publisher?.DisplayInfo();
+    }
+}
+public class Textbook : Book
+{
+    public string Subject { get; set; }
+
+    public Textbook(string title, string author, int year, int pages, Publisher publisher, string subject)
+        : base(title, author, year, pages, publisher)
+    {
+        Subject = subject;
+    }
+    public override string GetInfo()
+    {
+        return base.GetInfo() + $", Предмет: {Subject}";
+    }
+    public override void DisplayInfo()
+    {
+        Console.WriteLine(GetInfo());
+        Publisher?.DisplayInfo();
+    }
+}
+public class FictionBook : Book
+{
+    public string Genre { get; set; }
+
+    public FictionBook(string title, string author, int year, int pages, Publisher publisher, string genre)
+        : base(title, author, year, pages, publisher)
+    {
+        Genre = genre;
+    }
+    public override string GetInfo()
+    {
+        return base.GetInfo() + $", Жанр: {Genre}";
+    }
+    public override void DisplayInfo()
+    {
+        Console.WriteLine(GetInfo());
+        Publisher?.DisplayInfo();
+    }
+}
+public class Reader
+{
+    public string Name { get; set; }
+    public int Id { get; set; }
+    public List<Book> BorrowedBooks { get; set; }
+    public Reader(string name, int id)
+    {
+        Name = name;
+        Id = id;
+        BorrowedBooks = new List<Book>();
+    }
+    public void TakeBook(Book book)
+    {
+        if (book == null)
+           throw new ArgumentNullException(nameof(book));
+
+        BorrowedBooks.Add(book);
+        Console.WriteLine($"{Name} взял книгу: {book.Title}");
+    }
+    public void ReturnBook(Book book)
+    {
+        if (BorrowedBooks.Remove(book))
+        {
+            Console.WriteLine($"{Name} вернул книгу: {book.Title}");
+        }
+    }
+    public void DisplayBorrowedBooks()
+    {
+        Console.WriteLine($"\nЧитатель {Name} (ID: {Id}) взял книг: {BorrowedBooks.Count}");
+        foreach (var book in BorrowedBooks)
+        {
+            Console.WriteLine($"  - {book.Title}");
+        }
+    }
+}
+public interface ILibraryManagement
+{
+    void AddBook(Book book);
+    bool RemoveBook(string title);
+    Book FindBook(string title);
+    void DisplayAllBooks();
+}
+public class Library : ILibraryManagement
+{
+    private List<Book> _books;
+    private List<Reader> _readers;
+    public string Name { get; set; }
+    public Library(string name)
+    {
+        Name = name;
+        _books = new List<Book>();
+        _readers = new List<Reader>();
+    }
+    public void AddBook(Book book)
+    {
+        _books.Add(book);
+        Console.WriteLine($"Книга добавлена в библиотеку: {book.Title}");
+    }
+    public bool RemoveBook(string title)
+    {
+        var book = _books.FirstOrDefault(b => b.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+        if (book != null)
+        {
+            _books.Remove(book);
+            Console.WriteLine($"Книга удалена: {title}");
+            return true;
+        }
+        Console.WriteLine($"Книга не найдена: {title}");
+        return false;
+    }
+    public Book FindBook(string title)
+    {
+        return _books.FirstOrDefault(b => b.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+    }
+    public void DisplayAllBooks()
+    {
+        if (_books.Count == 0)
+        {
+            Console.WriteLine("Библиотека пуста");
+            return;
+        }
+        foreach (var book in _books)
+        {
+            Console.WriteLine(book.GetInfo());
+        }
+    }
+    public bool LendBook(string title, Reader reader)
+    {
+        var book = FindBook(title);
+        if (book == null)
+        {
+            Console.WriteLine($"Книга '{title}' не найдена в библиотеке");
+            return false;
+        }
+        if (_books.Remove(book))
+        {
+            reader.TakeBook(book);
+            return true;
+        }
+
+        return false;
+    }
+    public bool ReturnBook(Book book, Reader reader)
+    {
+        if (reader.BorrowedBooks.Contains(book))
+        {
+            reader.ReturnBook(book);
+            _books.Add(book);
+            return true;
+        }
+        Console.WriteLine($"Читатель {reader.Name} не брал книгу {book.Title}");
+        return false;
+    }
+    public void RegisterReader(Reader reader)
+    {
+        _readers.Add(reader);
+        Console.WriteLine($"Зарегистрирован новый читатель: {reader.Name}");
+    }
+}
+
