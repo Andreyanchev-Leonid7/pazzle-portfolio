@@ -1,0 +1,53 @@
+// 1 Задание
+List<int> numbers = new List<int> { 1, 2, 3 };
+foreach (var number in numbers)
+{
+    Console.WriteLine(number);
+}
+// 2 Задание
+Dictionary<string, int> tel = new Dictionary<string, int>();
+tel.Add("Комуналка", 892045175);
+tel.Add("Работа", 856798203);
+tel.Add("Скорая помощь", 112);
+tel["Работа"] = 931103004;
+string nonExistentContact = "Анна Смирнова";
+
+if (tel.ContainsKey(nonExistentContact))
+{
+    Console.WriteLine($"Телефон {nonExistentContact}: {tel[nonExistentContact]}");
+}
+else
+{
+    Console.WriteLine($"Контакт '{nonExistentContact}' не найден в телефонной книге.");
+}
+
+// 3 Задание
+Queue<string> Shop = new Queue<string>();
+Shop.Enqueue("Tom");
+Shop.Enqueue("Bob");
+Shop.Enqueue("Ann");
+var firstshoper = Shop.Peek();
+Console.WriteLine(firstshoper);
+var person1 = Shop.Dequeue();  
+Console.WriteLine(person1); 
+var person2 = Shop.Dequeue();  
+Console.WriteLine(person2); 
+var person3 = Shop.Dequeue();  
+Console.WriteLine(person3);
+
+// 4 Задание
+
+Stack<string> stak = new Stack<string>();
+stak.Push("Покушать");
+stak.Push("Поспать");
+stak.Push("Сделать уроки");
+
+string first = stak.Peek();
+Console.WriteLine(first);  
+
+string t1 = stak.Pop();
+Console.WriteLine(t1);
+string t2 = stak.Pop();
+Console.WriteLine(t2);  
+string t3 = stak.Pop();
+Console.WriteLine(t3);  
