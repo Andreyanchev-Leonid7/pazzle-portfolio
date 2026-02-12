@@ -1,10 +1,13 @@
 // 1 Задание
+
 List<int> numbers = new List<int> { 1, 2, 3 };
 foreach (var number in numbers)
 {
     Console.WriteLine(number);
 }
+
 // 2 Задание
+
 Dictionary<string, int> tel = new Dictionary<string, int>();
 tel.Add("Комуналка", 892045175);
 tel.Add("Работа", 856798203);
@@ -22,6 +25,7 @@ else
 }
 
 // 3 Задание
+
 Queue<string> Shop = new Queue<string>();
 Shop.Enqueue("Tom");
 Shop.Enqueue("Bob");
@@ -51,3 +55,75 @@ string t2 = stak.Pop();
 Console.WriteLine(t2);  
 string t3 = stak.Pop();
 Console.WriteLine(t3);  
+
+// 5 Задание
+
+var prices = new Dictionary<string, int>
+        {
+            { "Кофе", 150 },
+            { "Чай", 100 },
+            { "Сэндвич", 250 },
+            { "Пирожное", 200 }, 
+            { "Сок", 120 }
+        };
+var clientQueue = new Queue<string>();
+clientQueue.Enqueue("Анна");
+clientQueue.Enqueue("Иван");
+clientQueue.Enqueue("Мария");
+clientQueue.Enqueue("Петр");
+clientQueue.Enqueue("Елена");
+var standardOrder = new List<string> { "Кофе", "Сэндвич", "Сок" };
+int totalRevenue = 0;
+int orderNumber = 1;
+
+Console.WriteLine("=== Обслуживание клиентов ===\n");
+Console.WriteLine("Меню:");
+foreach (var item in prices)
+{
+    Console.WriteLine($"  {item.Key}: {item.Value} руб.");
+}
+Console.WriteLine("\nСтандартный заказ: " + string.Join(", ", standardOrder));
+Console.WriteLine("\nНачинаем обслуживание...\n");
+while (clientQueue.Count > 0)
+{
+    string client = clientQueue.Dequeue();
+    int orderSum = 0;
+    Console.WriteLine($"Заказ #{orderNumber}. Клиент: {client}");
+    Console.WriteLine("  Состав заказа:");
+    foreach (var item in standardOrder)
+    {
+        if (prices.ContainsKey(item))
+        {
+            int itemPrice = prices[item];
+            orderSum += itemPrice;
+            Console.WriteLine($"    - {item}: {itemPrice} руб.");
+        }
+        else
+        {
+            Console.WriteLine($"    - {item}: товар не найден в меню!");
+        }
+    }
+
+    totalRevenue += orderSum;
+    Console.WriteLine($"  Итого к оплате: {orderSum} руб.");
+    Console.WriteLine($"  Заказ выполнен! Клиент {client} обслужен.\n");
+
+    orderNumber++;
+}
+Console.WriteLine("Итоги дня");
+Console.WriteLine($"Всего обслужено клиентов: {orderNumber - 1}");
+Console.WriteLine($"Общая выручка: {totalRevenue} руб.");
+var salesStatistic = new Dictionary<string, int>();
+foreach (var item in standardOrder)
+{
+    if (salesStatistic.ContainsKey(item))
+        salesStatistic[item]++;
+    else
+        salesStatistic[item] = 1;
+}
+Console.WriteLine("\nСтатистика продаж:");
+foreach (var item in salesStatistic)
+{
+    Console.WriteLine($"  {item.Key}: {item.Value} шт.");
+}
+Console.WriteLine("\nКафе закрыто. До свидания!");
