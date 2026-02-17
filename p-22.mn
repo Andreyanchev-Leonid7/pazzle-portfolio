@@ -1,0 +1,64 @@
+// 1 Задание
+
+var actions = new Stack<string>();
+actions.Push("Набрать текст 'Привет'");
+actions.Push("Вставить картинку");
+actions.Push("Выделить текст");
+actions.Push("Изменить шрифт");
+
+Console.WriteLine("Текущий стек действий:");
+foreach (var action in actions)
+{
+    Console.WriteLine($"  {action}");
+}
+if (actions.Count > 0)
+{
+    string topAction = actions.Peek();
+    Console.WriteLine($"\nВерхнее действие: {topAction}");
+}
+Console.WriteLine("\nОтмена действий:");
+while (actions.Count > 0)
+{
+    string undoneAction = actions.Pop();
+    Console.WriteLine($"Отменено действие: {undoneAction}");
+    Console.WriteLine($"Осталось действий в стеке: {actions.Count}");
+}
+
+
+// 2 Задание
+
+string a = Console.ReadLine();
+string a1 = a.Replace(" ", "").ToLower();
+Queue<char> queue = new Queue<char>();
+Stack<char> stack = new Stack<char>();
+foreach (char c in a1)
+{
+    queue.Enqueue(c);
+    stack.Push(c);
+}
+bool flag = true;
+while (queue.Count > 0 && stack.Count > 0)
+{
+    char fromQueue = queue.Dequeue();  
+    char fromStack = stack.Pop();   
+    if (fromQueue != fromStack)
+    {
+        flag = false;
+        break;
+    }
+}
+if (flag)
+{
+    if (queue.Count == 0 && stack.Count == 0)
+    {
+        Console.WriteLine("Результат: Это палиндром!");
+    }
+    else
+    {
+        Console.WriteLine("Результат: Не палиндром (разная длина)");
+    }
+}
+else
+{
+    Console.WriteLine("Результат: Это не палиндром");
+}
