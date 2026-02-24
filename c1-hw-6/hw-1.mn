@@ -1,0 +1,21 @@
+// 1 Задание
+string fileName = "notes.txt";
+File.WriteAllLines(fileName, new string[]
+{
+            "Первая строка",
+            "Вторая строка",
+            "Третья строка"
+});
+File.AppendAllText(fileName, "Четвертая строка (добавленная)" + Environment.NewLine);
+Console.WriteLine("Содержимое файла:");
+Console.WriteLine(File.ReadAllText(fileName));
+Console.Write("Удалить файл? (y - да): ");
+if (Console.ReadLine().ToLower() == "y")
+{
+    File.Delete(fileName);
+    Console.WriteLine("Файл удален.");
+}
+else
+{
+    Console.WriteLine("Файл сохранен.");
+}
