@@ -1,0 +1,69 @@
+// 1 Задание
+
+string directoryPath = "data";
+try
+{
+    Directory.CreateDirectory(directoryPath);
+    Console.WriteLine($"Каталог '{directoryPath}' создан или уже существует.");
+    string filePath = Path.Combine(directoryPath, $"file.txt");
+    Console.WriteLine($"Создан файл: file.txt");
+    File.WriteAllText(Path.Combine(directoryPath, "not_text.docx"), "Это не текстовый файл");
+    
+    var txtFiles = Directory.GetFiles(directoryPath, "*.txt");
+    foreach (string file in txtFiles)
+    {
+        FileInfo fileInfo = new FileInfo(file);
+        Console.WriteLine($"Файл: {fileInfo.Name}, Размер: {fileInfo.Length} байт");
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Произошла ошибка: {ex.Message}");
+}
+
+// 2 Задание
+
+Console.Write("Введите путь к файлу для создания резервной копии: ");
+string filePath = Console.ReadLine();
+
+try
+{
+    if (File.Exists(filePath))
+    {
+        FileInfo fileInfo = new FileInfo(filePath);
+        string backupPath = filePath + ".bak";
+        if (File.Exists(backupPath))
+        {
+            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            backupPath = filePath + $".{timestamp}.bak";
+            Console.WriteLine($"Файл резервной копии уже существует. Будет создан: {Path.GetFileName(backupPath)}");
+        }
+        File.Copy(filePath, backupPath);
+        Console.WriteLine("\n✓ Резервная копия успешно создана!");
+        Console.WriteLine($"Исходный файл: {filePath}");
+        Console.WriteLine($"Резервная копия: {backupPath}");
+        Console.WriteLine($"Размер файла: {fileInfo.Length} байт");
+        Console.WriteLine($"Время создания копии: {DateTime.Now}");
+    }
+    else
+    {
+        Console.WriteLine($"\n❌ Ошибка: Файл '{filePath}' не существует!");
+        Console.WriteLine("Проверьте правильность пути и попробуйте снова.");
+    }
+}
+catch (UnauthorizedAccessException)
+{
+    Console.WriteLine("\n❌ Ошибка доступа: Нет прав для чтения/записи файла.");
+}
+catch (PathTooLongException)
+{
+    Console.WriteLine("\n❌ Ошибка: Слишком длинный путь к файлу.");
+}
+catch (IOException ex)
+{
+    Console.WriteLine($"\n❌ Ошибка ввода-вывода: {ex.Message}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"\n❌ Непредвиденная ошибка: {ex.Message}");
+}
