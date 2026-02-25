@@ -67,3 +67,137 @@ catch (Exception ex)
 {
     Console.WriteLine($"\n❌ Непредвиденная ошибка: {ex.Message}");
 }
+
+// 3 Задание
+
+class Book
+{
+    public string Title { get; set; }
+    public string Author { get; set; }
+
+    public Book(string title, string author)
+    {
+        Title = title;
+        Author = author;
+    }
+
+    public override string ToString()
+    {
+        return $"Название: {Title}, Автор: {Author}";
+    }
+}
+static List<Book> books = new List<Book>();
+    const string fileName = "books.txt";
+    static void Main(string[] args)
+    {
+        LoadBooksFromFile();
+        while (true)
+        {
+            Console.WriteLine("\n--- Меню ---");
+            Console.WriteLine("1. Добавить книгу");
+            Console.WriteLine("2. Показать все книги");
+            Console.WriteLine("3. Выход");
+            Console.Write("Выберите действие: ");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    AddBook();
+                    break;
+                case "2":
+                    ShowAllBooks();
+                    break;
+                case "3":
+                    SaveBooksToFile();
+                    Console.WriteLine("Программа завершена. До свидания!");
+                    return;
+                default:
+                    Console.WriteLine("Неверный выбор. Пожалуйста, выберите 1, 2 или 3.");
+                    break;
+            }
+        }
+    }
+    static void AddBook()
+    {
+        Console.Write("Введите название книги: ");
+        string title = Console.ReadLine();
+
+        Console.Write("Введите автора книги: ");
+        string author = Console.ReadLine();
+
+        if (!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(author))
+        {
+            books.Add(new Book(title, author));
+            Console.WriteLine("Книга успешно добавлена!");
+            SaveBooksToFile(); // Сохраняем сразу после добавления
+        }
+        else
+        {
+            Console.WriteLine("Название и автор не могут быть пустыми!");
+        }
+    }
+    static void ShowAllBooks()
+    {
+        if (books.Count == 0)
+        {
+            Console.WriteLine("Список книг пуст.");
+            return;
+        }
+
+        Console.WriteLine("\n--- Список книг ---");
+        for (int i = 0; i < books.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {books[i]}");
+        }
+    }
+
+    static void SaveBooksToFile()
+    {
+        try
+        {
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                foreach (Book book in books)
+                {
+                    writer.WriteLine($"{book.Title};{book.Author}");
+                }
+            }
+            Console.WriteLine("Список книг сохранен в файл.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при сохранении в файл: {ex.Message}");
+        }
+    }
+
+    static void LoadBooksFromFile()
+    {
+        try
+        {
+            if (File.Exists(fileName))
+            {
+                string[] lines = File.ReadAllLines(fileName);
+                books.Clear();
+
+                foreach (string line in lines)
+                {
+                    if (!string.IsNullOrWhiteSpace(line))
+                    {
+                        string[] parts = line.Split(';');
+                        if (parts.Length == 2)
+                        {
+                            books.Add(new Book(parts[0], parts[1]));
+                        }
+                    }
+                }
+                Console.WriteLine($"Загружено {books.Count} книг из файла.");
+            }
+            else
+            {
+                Console.WriteLine("Файл с книгами не найден. Будет создан новый список.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при загрузке из файла: {ex.Message}");
+        }
