@@ -1,0 +1,50 @@
+// 1 Задание
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+public class Book
+{
+    [JsonPropertyName("title")]     
+    public string Title { get; set; }
+
+    [JsonPropertyName("author")]     
+    public string Author { get; set; }
+
+    [JsonPropertyName("year")]      
+    public int Year { get; set; }
+    public override string ToString()
+    {
+        return $"Название: {Title}, Автор: {Author}, Год: {Year}";
+    }
+}
+
+class Program
+{
+    static void Main(string[] args) { 
+        List<Book> books = new List<Book>
+            {
+                new Book { Title = "Война и мир", Author = "Лев Толстой", Year = 1869 },
+                new Book { Title = "Преступление и наказание", Author = "Фёдор Достоевский", Year = 1866 },
+                new Book { Title = "Мастер и Маргарита", Author = "Михаил Булгаков", Year = 1967 }
+            };
+        string fileName = "books.json";
+        JsonSerializerOptions options = new JsonSerializerOptions
+        {
+            WriteIndented = true, 
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping 
+        };
+
+        string jsonString = JsonSerializer.Serialize(books, options);
+        File.WriteAllText(fileName, jsonString);
+        Console.WriteLine($"Список книг сериализован и сохранён в файл {fileName}");
+        string readJson = File.ReadAllText(fileName);
+        List<Book> deserializedBooks = JsonSerializer.Deserialize<List<Book>>(readJson);
+        Console.WriteLine("\nСодержимое файла после десериализации:");
+        foreach (var book in deserializedBooks)
+        {
+            Console.WriteLine(book);
+        }
+        Console.WriteLine($"\nСодержимое файла {fileName} (сырой JSON):");
+        Console.WriteLine(readJson);
+    }
+}
