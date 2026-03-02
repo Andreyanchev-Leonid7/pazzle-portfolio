@@ -1,0 +1,94 @@
+// 1-2 Уровни
+    public class Book
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public int Year { get; set; }
+        
+        // Конструктор по умолчанию для сериализации
+        public Book() { }
+        
+        public Book(string title, string author, int year)
+        {
+            Title = title;
+            Author = author;
+            Year = year;
+        }
+        
+        public override string ToString()
+        {
+            return $"\"{Title}\" by {Author}, {Year}";
+        }
+    public class Library
+    {
+        public string Name { get; set; }
+        public List<Book> Books { get; set; }
+        
+        // Конструктор по умолчанию для сериализации
+        public Library() 
+        { 
+            Books = new List<Book>();
+        }
+        
+        public Library(string name, List<Book> books)
+        {
+            Name = name;
+            Books = books ?? new List<Book>();
+        }
+    }
+            List<Book> books = new List<Book>
+            {
+                new Book("Война и мир", "Лев Толстой", 1869),
+                new Book("Преступление и наказание", "Федор Достоевский", 1866),
+                new Book("Мастер и Маргарита", "Михаил Булгаков", 1967),
+                new Book("Евгений Онегин", "Александр Пушкин", 1833),
+                new Book("Мертвые души", "Николай Гоголь", 1842)
+            };
+            string json = JsonConvert.SerializeObject(books);
+            File.WriteAllText("books.json", json);
+            string jsonFromFile = File.ReadAllText("books.json");
+            List<Book> deserializedBooks = JsonConvert.DeserializeObject<List<Book>>(jsonFromFile);
+            foreach (var book in deserializedBooks)
+            {
+                Console.WriteLine($"  {book}");
+            }
+            Console.WriteLine();
+            var settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var bookForCustomSerialization = new BookWithCustomNames
+            {
+                Title = "Анна Каренина",
+                Author = "Лев Толстой",
+                Year = 1877
+            };
+            
+            string customJson = JsonConvert.SerializeObject(bookForCustomSerialization, settings);
+            Console.WriteLine(customJson);
+            Console.WriteLine();
+            Library library = new Library("Городская библиотека №1", books);
+            string libraryJson = JsonConvert.SerializeObject(library, settings);
+            File.WriteAllText("library.json", libraryJson);;
+            string libraryJsonFromFile = File.ReadAllText("library.json");
+            Library deserializedLibrary = JsonConvert.DeserializeObject<Library>(libraryJsonFromFile);
+            Console.WriteLine($"Название библиотеки: {deserializedLibrary.Name}");
+            Console.WriteLine("Книги в библиотеке:");
+            foreach (var book in deserializedLibrary.Books)
+            {
+                Console.WriteLine($"  {book}");
+            }
+        }
+    }
+    public class BookWithCustomNames
+    {
+        [JsonProperty("book_title")]
+        public string Title { get; set; }
+        
+        [JsonProperty("book_author")]
+        public string Author { get; set; }
+        
+        [JsonProperty("publication_year")]
+        public int Year { get; set; }
+    }
