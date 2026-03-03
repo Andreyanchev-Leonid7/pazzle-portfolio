@@ -19,3 +19,42 @@ else
 {
     Console.WriteLine("В массиве нет положительных чётных чисел");
 }
+// 2 Задание
+List<string> words = new List<string>
+        {
+            "яблоко",
+            "Арбуз",
+            "апельсин",
+            "Банан",
+            "ананас",
+            "Груша",
+            "Абрикос",
+            "арбуз",      
+            "Апельсин",   
+            "вишня",
+            "Айва",
+            "автомобиль"
+        };
+var result = words
+    .Where(w => !string.IsNullOrEmpty(w) && w.StartsWith("а", StringComparison.OrdinalIgnoreCase))  
+    .Select(w => w.ToUpper())                                                                        
+    .Distinct()                                                                                      
+    .OrderBy(w => w.Length)                                                                          
+    .ToList();
+foreach (var word in words)
+{
+    Console.WriteLine($"  {word}");
+}
+if (result.Any())
+{
+    foreach (var word in result)
+    {
+        Console.WriteLine($"  {word} (длина: {word.Length})");
+    }
+
+    Console.WriteLine($"\nВсего уникальных слов: {result.Count}");
+}
+else
+{
+    Console.WriteLine("  Слова на букву 'А/а' не найдены");
+}
