@@ -1,0 +1,218 @@
+// 3 Задание
+var students = new List<Student>
+ {
+       new Student { Name = "Анна", Grade = 5 },
+       new Student { Name = "Иван", Grade = 3 },
+       new Student { Name = "Мария", Grade = 4 },
+       new Student { Name = "Петр", Grade = 2 },
+       new Student { Name = "Елена", Grade = 5 },
+       new Student { Name = "Дмитрий", Grade = 4 },
+       new Student { Name = "Ольга", Grade = 3 }
+ };
+var excellentStudents = students
+    .Where(s => s.Grade >= 4)
+    .OrderBy(s => s.Name)
+    .Select(s => s.Name);
+Console.WriteLine("Ученики с оценкой >= 4 (отсортированы по имени):");
+foreach (var name in excellentStudents)
+{
+    Console.WriteLine(name);
+}
+class Student
+{
+    public string Name { get; set; }
+    public int Grade { get; set; }
+}
+// 4 Задание
+var dates = new List<DateTime>
+        {
+            new DateTime(2023, 1, 15),
+            new DateTime(2023, 1, 20),
+            new DateTime(2023, 2, 5),
+            new DateTime(2023, 2, 25),
+            new DateTime(2023, 3, 3),
+            new DateTime(2023, 3, 18),
+            new DateTime(2023, 4, 7)
+        };
+var result = dates
+    .GroupBy(d => new { d.Year, d.Month })
+    .Select(g => new
+    {
+        Month = g.Key.Month,
+        Year = g.Key.Year,
+        Count = g.Count(),
+        MinDate = g.Min(),
+        MaxDate = g.Max()
+    })
+    .OrderBy(x => x.Year)
+    .ThenBy(x => x.Month);
+
+foreach (var item in result)
+{
+    Console.WriteLine( $"Count={item.Count}, " + $"Min={item.MinDate:yyyy-MM-dd}, " + $"Max={item.MaxDate:yyyy-MM-dd}");
+}
+// 5 Задание
+Dictionary<string, int> scores = new Dictionary<string, int>
+        {
+            { "Анна", 85 },
+            { "Иван", 92 },
+            { "Мария", 78 },
+            { "Петр", 88 },
+            { "Елена", 95 },
+            { "Дмитрий", 82 },
+            { "Ольга", 91 },
+            { "Алексей", 79 }
+        };
+List<string> result1 = scores
+    .OrderByDescending(kvp => kvp.Value) 
+    .Select(kvp => $"{kvp.Key} — {kvp.Value}")  
+    .ToList();
+foreach (string item in result1)
+{
+    Console.WriteLine(item);
+}
+// 6 Задание
+var products = new List<Product>
+        {
+            new Product { Name = "Ноутбук", Category = "Электроника", Price = 75000, Stock = 10 },
+            new Product { Name = "Смартфон", Category = "Электроника", Price = 45000, Stock = 25 },
+            new Product { Name = "Планшет", Category = "Электроника", Price = 35000, Stock = 15 },
+            new Product { Name = "Наушники", Category = "Электроника", Price = 5000, Stock = 50 },
+
+            new Product { Name = "Футболка", Category = "Одежда", Price = 1500, Stock = 100 },
+            new Product { Name = "Джинсы", Category = "Одежда", Price = 3500, Stock = 45 },
+            new Product { Name = "Куртка", Category = "Одежда", Price = 8500, Stock = 20 },
+            new Product { Name = "Кроссовки", Category = "Одежда", Price = 5500, Stock = 30 },
+
+            new Product { Name = "Хлеб", Category = "Продукты", Price = 50, Stock = 200 },
+            new Product { Name = "Молоко", Category = "Продукты", Price = 80, Stock = 150 },
+            new Product { Name = "Сыр", Category = "Продукты", Price = 400, Stock = 40 },
+            new Product { Name = "Мясо", Category = "Продукты", Price = 600, Stock = 25 },
+
+            new Product { Name = "Диван", Category = "Мебель", Price = 45000, Stock = 5 },
+            new Product { Name = "Стул", Category = "Мебель", Price = 5000, Stock = 30 },
+            new Product { Name = "Стол", Category = "Мебель", Price = 15000, Stock = 8 }
+        };
+var categoryStats = products
+    .GroupBy(p => p.Category)
+    .Select(g => new
+    {
+        Category = g.Key,
+        Count = g.Count(),
+        AveragePrice = g.Average(p => p.Price),
+        TotalStock = g.Sum(p => p.Stock),
+        MostExpensiveProduct = g.OrderByDescending(p => p.Price).First(),
+        MostExpensivePrice = g.Max(p => p.Price),
+        MinPrice = g.Min(p => p.Price),
+        TotalValue = g.Sum(p => p.Price * p.Stock) 
+    })
+    .OrderByDescending(x => x.TotalValue)
+    .ToList();
+foreach (var stat in categoryStats)
+{
+    Console.WriteLine($"\nКатегория: {stat.Category}");
+    Console.WriteLine($"  Количество товаров: {stat.Count}");
+    Console.WriteLine($"  Средняя цена: {stat.AveragePrice:N2} руб.");
+    Console.WriteLine($"  Общий остаток: {stat.TotalStock} шт.");
+    Console.WriteLine($"  Общая стоимость запасов: {stat.TotalValue:N2} руб.");
+    Console.WriteLine($"  Диапазон цен: {stat.MinPrice:N0} - {stat.MostExpensivePrice:N0} руб.");
+    Console.WriteLine($"  Самый дорогой товар: {stat.MostExpensiveProduct.Name} ({stat.MostExpensiveProduct.Price:N0} руб.)");
+}
+class Product
+{
+    public string Name { get; set; }
+    public string Category { get; set; }
+    public decimal Price { get; set; }
+    public int Stock { get; set; }
+}
+// 7 Задание
+var students = new List<Student>
+        {
+            new Student { Name = "Анна", Club = "Спорт" },
+            new Student { Name = "Иван", Club = "Музыка" },
+            new Student { Name = "Мария", Club = "Спорт" },
+            new Student { Name = "Петр", Club = "Шахматы" },
+            new Student { Name = "Елена", Club = "Танцы" },
+            new Student { Name = "Дмитрий", Club = "Музыка" },
+            new Student { Name = "Ольга", Club = "Рисование" },
+            new Student { Name = "Алексей", Club = "Спорт" },
+            new Student { Name = "Наталья", Club = "Фото" },
+            new Student { Name = "Сергей", Club = null }
+        };
+var clubInfos = new List<ClubInfo>
+        {
+            new ClubInfo { Club = "Спорт", Room = "101" },
+            new ClubInfo { Club = "Музыка", Room = "205" },
+            new ClubInfo { Club = "Шахматы", Room = "312" },
+            new ClubInfo { Club = "Танцы", Room = "125" },
+            new ClubInfo { Club = "Театр", Room = "404" }
+        };
+var innerJoinResult = students
+    .Join(clubInfos,
+          student => student.Club,
+          club => club.Club,
+          (student, club) => new
+          {
+              StudentName = student.Name,
+              ClubName = student.Club,
+              Room = club.Room
+          })
+    .OrderBy(x => x.StudentName)
+    .ToList();
+
+Console.WriteLine("Студенты с найденными клубами:");
+foreach (var item in innerJoinResult)
+{
+    Console.WriteLine($"  {item.StudentName} — {item.ClubName} (кабинет {item.Room})");
+}
+Console.WriteLine($"\nВсего найдено: {innerJoinResult.Count} студентов");
+var leftJoinResult = students
+    .GroupJoin(clubInfos,
+               student => student.Club,
+               club => club.Club,
+               (student, clubs) => new { student, clubs })
+    .SelectMany(
+        x => x.clubs.DefaultIfEmpty(),
+        (x, club) => new
+        {
+            StudentName = x.student.Name,
+            ClubName = x.student.Club,
+            Room = club?.Room ?? "—"
+        })
+    .OrderBy(x => x.StudentName)
+    .ToList();
+
+Console.WriteLine("Все студенты (с клубами или без):");
+foreach (var item in leftJoinResult)
+{
+    if (item.Room == "—")
+    {
+        Console.WriteLine($"  {item.StudentName} — {item.ClubName ?? "нет клуба"} (кабинет {item.Room}) - КЛУБ НЕ НАЙДЕН");
+    }
+    else
+    {
+        Console.WriteLine($"  {item.StudentName} — {item.ClubName} (кабинет {item.Room})");
+    }
+}
+Console.WriteLine($"\nВсего студентов: {leftJoinResult.Count}");
+Console.WriteLine("\n" + new string('=', 70));
+class Student
+{
+    public string Name { get; set; }
+    public string Club { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Name} (клуб: {Club ?? "не указан"})";
+    }
+}
+class ClubInfo
+{
+    public string Club { get; set; }
+    public string Room { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Club} - кабинет {Room}";
+    }
+}
