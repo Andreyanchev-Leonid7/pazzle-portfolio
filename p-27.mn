@@ -1,0 +1,106 @@
+using Telegram.Bot;
+using Telegram.Bot.Polling;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
+
+var botToken = Environment.GetEnvironmentVariable("8183276803:AAEoqF5d2RxiULTwJKUI_lovlepjNb3ARRM") ?? "8183276803:AAEoqF5d2RxiULTwJKUI_lovlepjNb3ARRM";
+var botClient = new TelegramBotClient(botToken);
+var dispatcher = new CommandDispatcher();
+
+dispatcher.RegisterCommand("/start", new StartCommand());
+        dispatcher.RegisterCommand("/help", new HelpCommand());
+        
+        using var cts = new CancellationTokenSource();
+
+var receiverOptions = new ReceiverOptions
+{
+    AllowedUpdates = new[] { UpdateType.Message }
+};
+
+botClient.StartReceiving(
+    updateHandler: HandleUpdateAsync,
+            errorHandler: HandleErrorAsync,
+            receiverOptions: receiverOptions,
+            cancellationToken: cts.Token
+        );
+        
+        var me = await botClient.GetMe();
+Console.WriteLine($"Бот @{me.Username} запущен!");
+        Console.WriteLine("Нажмите Enter для остановки...");
+        Console.ReadLine();
+        
+        cts.Cancel();
+        
+        async Task HandleUpdateAsync(ITelegramBotClient client, Telegram.Bot.Types.Update update, CancellationToken token)
+{
+    if (update.Message is not { } message)
+        return;
+
+    Console.WriteLine($"[{message.Chat.Id}] {message.From?.FirstName}: {message.Text}");
+    await dispatcher.DispatchAsync(update, client, token);
+}
+async Task HandleErrorAsync(ITelegramBotClient client, Exception exception, CancellationToken token)
+{
+    Console.WriteLine($"Ошибка: {exception.Message}");
+    await Task.CompletedTask;
+}
+public interface ICommand
+{
+    Task ExecuteAsync(Update update, ITelegramBotClient botClient, CancellationToken cancellationToken);
+}
+public class CommandDispatcher
+{
+    private readonly Dictionary<string, ICommand> _commands = new();
+
+    public void RegisterCommand(string command, ICommand handler)
+    {
+        _commands[command] = handler;
+    }
+    public async Task DispatchAsync(Update update, ITelegramBotClient botClient, CancellationToken cancellationToken)
+    {
+        if (update.Message == null) return;
+
+        var command = update.Message.Text.Split(' ')[0].ToLower();
+
+        if (_commands.TryGetValue(command, out var handler))
+        {
+            await handler.ExecuteAsync(update, botClient, cancellationToken);
+        }
+        else
+        {
+            await botClient.SendMessage( 
+                chatId: update.Message.Chat.Id,
+                text: "Неизвестная команда. Используйте /help для получения списка команд.",
+                cancellationToken: cancellationToken);
+        }
+    }
+}
+public class HelpCommand : ICommand
+{
+    public async Task ExecuteAsync(Update update, ITelegramBotClient botClient, CancellationToken cancellationToken)
+    {
+        var helpText = "📋 Доступные команды:\n\n" +
+                      "/start - Начать работу с ботом\n" +
+                      "/help - Показать это сообщение\n\n" +
+                      "🔄 Другие команды появятся в следующих версиях!";
+
+        await botClient.SendMessage(
+            chatId: update.Message.Chat.Id,
+            text: helpText,
+            cancellationToken: cancellationToken);
+    }
+}
+public class StartCommand : ICommand
+{
+    public async Task ExecuteAsync(Update update, ITelegramBotClient botClient, CancellationToken cancellationToken)
+    {
+        var userName = update.Message.From?.FirstName ?? "пользователь";
+
+        await botClient.SendMessage(
+            chatId: update.Message.Chat.Id,
+            text: $"👋 Привет, {userName}!\n\n" +
+                  "Я бот расписания. Я помогу тебе управлять твоим расписанием.\n\n" +
+                  "Используй /help чтобы увидеть все доступные команды.",
+            cancellationToken: cancellationToken); 
+    }
+}
